@@ -13,8 +13,8 @@
  * 5. Copy the Web App URL and paste it below
  */
 
-// Replace this URL with your deployed Google Apps Script Web App URL
-const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL';
+// Deployed Google Apps Script Web App URL for e-Sakshya Nominated officers List Dist Ayodhya sheet
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzI-jHxZULBHqa8r781UvVvChoBuAuajfZpE1nfWvfY2MisUtkJ56L7SDad-Z9FNLdqRQ/exec';
 
 /**
  * Save form data to Google Spreadsheet
