@@ -20,7 +20,6 @@ export default function App() {
   const [selectedStation, setSelectedStation] = useState('');
   const [officers, setOfficers] = useState([
     createEmptyOfficer(),
-    createEmptyOfficer(),
   ]);
   const [toast, setToast] = useState(null);
 
@@ -38,15 +37,39 @@ export default function App() {
         alert('कृपया थाना चुनें');
         return;
       }
+
+      // Filter out completely blank rows
+      const isRowBlank = (o) =>
+        !o.pno.trim() && !o.designation && !o.name.trim() && !o.mobile.trim();
+
+      const filledOfficers = officers.filter((o) => !isRowBlank(o));
+
+      if (filledOfficers.length === 0) {
+        alert('कृपया कम से कम एक अधिकारी/कर्मचारी की जानकारी भरें।');
+        return;
+      }
+
+      // Check for partially filled rows
+      const incompleteRow = filledOfficers.find(
+        (o) => !o.pno.trim() || !o.designation || !o.name.trim() || !o.mobile.trim()
+      );
+      if (incompleteRow) {
+        alert('कृपया सभी पंक्तियों में पी0एन0ओ0, पदनाम, नाम और मोबाइल नम्बर भरें।');
+        return;
+      }
+
       try {
-        // Format the data
-        const formData = formatFormData(selectedStation, officers);
+        // Format the data (use only filled officers)
+        const formData = formatFormData(selectedStation, filledOfficers);
 
         // Save to Google Sheets
         const result = await saveToGoogleSheet(formData);
 
         if (result.success) {
           showToast(result.message, result.demo ? 'info' : 'success');
+
+          // Update state to remove blank rows before preview
+          setOfficers(filledOfficers);
 
           // Wait a moment to show the toast, then switch to preview
           setTimeout(() => {
