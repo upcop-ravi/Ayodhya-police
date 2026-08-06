@@ -58,6 +58,20 @@ export default function App() {
         return;
       }
 
+      // Check PNO length (must be exactly 9 numeric digits)
+      const invalidPnoRow = filledOfficers.find((o) => o.pno.trim().length !== 9);
+      if (invalidPnoRow) {
+        alert('पी0एन0ओ0 9 अंकों का होना आवश्यक है।');
+        return;
+      }
+
+      // Check Mobile length (must be exactly 10 numeric digits)
+      const invalidMobileRow = filledOfficers.find((o) => o.mobile.trim().length !== 10);
+      if (invalidMobileRow) {
+        alert('मोबाइल नम्बर 10 अंकों का होना आवश्यक है।');
+        return;
+      }
+
       try {
         // Format the data (use only filled officers)
         const formData = formatFormData(selectedStation, filledOfficers);
