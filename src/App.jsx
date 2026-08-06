@@ -66,7 +66,7 @@ export default function App() {
         const result = await saveToGoogleSheet(formData);
 
         if (result.success) {
-          showToast(result.message, result.demo ? 'info' : 'success');
+          showToast('सफलतापूर्वक सुरक्षित किया गया', 'success');
 
           // Update state to remove blank rows before preview
           setOfficers(filledOfficers);

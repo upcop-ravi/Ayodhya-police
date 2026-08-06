@@ -51,7 +51,7 @@ export async function saveToGoogleSheet(formData) {
     // But a successful fetch means the request was sent
     return { 
       success: true, 
-      message: 'डेटा सफलतापूर्वक Google Spreadsheet में सेव किया गया!' 
+      message: 'सफलतापूर्वक सुरक्षित किया गया' 
     };
   } catch (error) {
     console.error('Error saving to Google Sheets:', error);
