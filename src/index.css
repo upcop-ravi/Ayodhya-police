@@ -452,37 +452,28 @@ body {
   text-align: center;
 }
 
-.preview-letterhead-top {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.2rem;
-  margin-bottom: 0.5rem;
-}
-
 .preview-emblem {
-  width: 56px;
-  height: 56px;
+  width: 65px;
+  height: 65px;
 }
 
-.preview-org-name {
-  font-size: 1.4rem;
-  font-weight: 900;
-  color: var(--navy-900);
-  letter-spacing: 1px;
-}
-
-.preview-sub-heading {
-  font-size: 0.95rem;
-  color: var(--text-secondary);
-  font-weight: 500;
-}
-
-.preview-district {
-  font-size: 1rem;
+.preview-letterhead-details {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 1.15rem;
   font-weight: 700;
-  color: var(--navy-800);
-  margin-top: 0.3rem;
+  color: var(--navy-900);
+  margin-top: 0.8rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  padding-top: 0.6rem;
+}
+
+.preview-date-line {
+  font-size: 0.85rem;
+  color: #555;
+  margin-top: 0.4rem;
+  text-align: right;
 }
 
 .preview-body {
@@ -1028,43 +1019,29 @@ body {
     text-align: center;
   }
 
-  .preview-letterhead-top {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 6mm !important;
-    margin-bottom: 2mm !important;
-  }
-
   .preview-emblem {
-    width: 42pt !important;
-    height: 42pt !important;
+    width: 50pt !important;
+    height: 50pt !important;
   }
 
-  .preview-org-name {
-    font-size: 13pt !important;
-    font-weight: 900 !important;
-    letter-spacing: 0.5pt !important;
-    color: #000 !important;
-  }
-
-  .preview-sub-heading {
-    font-size: 9pt !important;
-    color: #333 !important;
-  }
-
-  .preview-district {
-    font-size: 9.5pt !important;
+  .preview-letterhead-details {
+    display: flex !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    font-size: 10pt !important;
     font-weight: 700 !important;
     color: #000 !important;
-    margin-top: 1mm !important;
+    border-top: 0.5pt solid #ccc !important;
+    padding-top: 1mm !important;
+    margin-top: 2mm !important;
   }
 
-  /* Date line */
-  .preview-letterhead > div:last-child {
+  .preview-date-line {
     font-size: 8.5pt !important;
-    color: #444 !important;
+    color: #333 !important;
     margin-top: 1mm !important;
+    text-align: right !important;
+    display: block !important;
   }
 
   /* ---- Body ---- */

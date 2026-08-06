@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UP_POLICE_LOGO = '/logo-up-police.webp';
+const UP_POLICE_LOGO = '/uppolice logo2.png';
 
 const DESCRIPTION_TEXT = `ई-साक्ष्य पोर्टल की मॉनीटरिंग हेतु थाना स्थानीय पर नियुक्त निम्न अधिकारी/कर्मचारीगणों को नामित किया जाता है, निम्न अधिकारी/कर्मचारीगणों को अवगत कराया जाता है कि उनके द्वारा नियमित रूप से थाना स्तर पर विवेचकगणों से समन्वय स्थापित कर उनको ई-साक्ष्य पोर्टल पर आ रही समस्याओं को निस्तारित करवाते हुए यह सुनिश्चित करना होगा की उनके द्वारा सभी मुकदमों में SID समय से निर्मित की जा रही हैं व समस्त FIR को SID से फाइनल लिंकिंग समय से पूर्ण कराया जा रहा है।`;
 
@@ -55,26 +55,22 @@ export default function PreviewPage({ selectedStation, officers, onBack }) {
       <div className="preview-document" id="preview-document">
         {/* Letterhead */}
         <div className="preview-letterhead">
-          <div className="preview-letterhead-top">
+          <div className="preview-emblem-container" style={{ display: 'flex', justifyContent: 'center', marginBottom: '0.8rem' }}>
             <img
               src={UP_POLICE_LOGO}
               alt="उत्तर प्रदेश पुलिस"
               className="preview-emblem"
+              style={{ width: '65px', height: '65px' }}
               onError={(e) => {
                 e.target.style.display = 'none';
               }}
             />
-            <div>
-              <div className="preview-org-name">उत्तर प्रदेश पुलिस</div>
-              <div className="preview-sub-heading">
-                कार्यालय - थाना {selectedStation || '_______________'}
-              </div>
-            </div>
           </div>
-          <div className="preview-district">
-            जनपद - अयोध्या
+          <div className="preview-letterhead-details">
+            <span>कार्यालय - थाना {selectedStation || '_______________'}</span>
+            <span>जनपद - अयोध्या</span>
           </div>
-          <div style={{ fontSize: '0.8rem', color: '#666', marginTop: '0.3rem' }}>
+          <div className="preview-date-line">
             दिनांक: {currentDate}
           </div>
         </div>
