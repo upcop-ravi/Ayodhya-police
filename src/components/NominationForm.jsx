@@ -280,6 +280,11 @@ export default function NominationForm({ selectedStation, setSelectedStation, of
             </div>
           </div>
         </div>
+
+        {/* Website Copyright Footer */}
+        <div className="copyright-footer no-print">
+          © {new Date().getFullYear()} ई-साक्ष्य मॉनीटरिंग प्रणाली - उत्तर प्रदेश पुलिस, जनपद अयोध्या | सर्वाधिकार सुरक्षित
+        </div>
       </div>
     </div>
   );

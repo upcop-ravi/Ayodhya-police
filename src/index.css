@@ -958,11 +958,28 @@ body {
   }
 }
 
+/* ===== Website Copyright Footer ===== */
+.copyright-footer {
+  text-align: center;
+  padding: 1rem 1.5rem;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(12, 20, 69, 0.6);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 1.5rem;
+  border-radius: 0 0 14px 14px;
+}
+
 /* ===== Print Styles ===== */
 @media print {
   @page {
     size: A4;
     margin: 15mm 12mm;
+  }
+
+  .no-print,
+  .copyright-footer {
+    display: none !important;
   }
 
   body {

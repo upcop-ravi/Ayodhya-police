@@ -132,6 +132,11 @@ export default function PreviewPage({ selectedStation, officers, onBack }) {
           यह एक कम्प्यूटर जनित प्रपत्र है | ई-साक्ष्य मॉनीटरिंग सिस्टम - जनपद अयोध्या
         </div>
       </div>
+
+      {/* Website Copyright Footer */}
+      <div className="copyright-footer no-print" style={{ maxWidth: '900px', margin: '1rem auto 0', borderRadius: '8px' }}>
+        © {new Date().getFullYear()} ई-साक्ष्य मॉनीटरिंग प्रणाली - उत्तर प्रदेश पुलिस, जनपद अयोध्या | सर्वाधिकार सुरक्षित
+      </div>
     </div>
   );
 }
