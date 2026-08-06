@@ -970,78 +970,193 @@ body {
   border-radius: 0 0 14px 14px;
 }
 
-/* ===== Print Styles ===== */
+/* ===== Print Styles — Single A4 Page ===== */
 @media print {
   @page {
-    size: A4;
-    margin: 15mm 12mm;
+    size: A4 portrait;
+    margin: 10mm 12mm;
   }
 
+  /* Hide everything non-printable */
   .no-print,
-  .copyright-footer {
+  .copyright-footer,
+  .preview-actions,
+  .btn-back,
+  .btn-print {
     display: none !important;
   }
 
-  body {
-    background: white !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
   }
 
+  html, body {
+    width: 210mm;
+    height: 297mm;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+    font-size: 10pt !important;
+  }
+
+  /* Wrapper — no background gradient */
   .preview-wrapper {
     background: white !important;
     padding: 0 !important;
-    min-height: auto !important;
+    min-height: unset !important;
+    width: 100% !important;
   }
 
-  .preview-actions {
-    display: none !important;
-  }
-
+  /* Document — full width, no shadow */
   .preview-document {
     box-shadow: none !important;
     border-radius: 0 !important;
     max-width: 100% !important;
+    width: 100% !important;
     margin: 0 !important;
+    padding: 0 !important;
+    page-break-inside: avoid;
   }
 
+  /* ---- Letterhead ---- */
   .preview-letterhead {
-    border-bottom: 3px double #000 !important;
     background: white !important;
-    padding: 0.5rem 1rem 0.8rem !important;
+    border-bottom: 2.5pt double #000 !important;
+    padding: 4mm 8mm 4mm !important;
+    text-align: center;
   }
 
+  .preview-letterhead-top {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6mm !important;
+    margin-bottom: 2mm !important;
+  }
+
+  .preview-emblem {
+    width: 42pt !important;
+    height: 42pt !important;
+  }
+
+  .preview-org-name {
+    font-size: 13pt !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.5pt !important;
+    color: #000 !important;
+  }
+
+  .preview-sub-heading {
+    font-size: 9pt !important;
+    color: #333 !important;
+  }
+
+  .preview-district {
+    font-size: 9.5pt !important;
+    font-weight: 700 !important;
+    color: #000 !important;
+    margin-top: 1mm !important;
+  }
+
+  /* Date line */
+  .preview-letterhead > div:last-child {
+    font-size: 8.5pt !important;
+    color: #444 !important;
+    margin-top: 1mm !important;
+  }
+
+  /* ---- Body ---- */
   .preview-body {
-    padding: 1rem 1.5rem !important;
+    padding: 4mm 8mm 3mm !important;
+  }
+
+  .preview-title {
+    font-size: 10.5pt !important;
+    font-weight: 800 !important;
+    text-align: center !important;
+    margin-bottom: 4mm !important;
+    padding-bottom: 2mm !important;
+    border-bottom: 1.5pt solid #000 !important;
+    color: #000 !important;
+    text-decoration: underline !important;
+    text-underline-offset: 3pt !important;
+  }
+
+  .preview-description {
+    font-size: 8.5pt !important;
+    line-height: 1.6 !important;
+    text-align: justify !important;
+    text-indent: 8mm !important;
+    margin-bottom: 4mm !important;
+    color: #000 !important;
+  }
+
+  /* ---- Table ---- */
+  .preview-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 8.5pt !important;
+    margin-bottom: 4mm !important;
+    page-break-inside: avoid !important;
   }
 
   .preview-table thead th {
     background: #1a1a2e !important;
     color: white !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    padding: 2.5mm 2mm !important;
+    font-size: 8pt !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    border: 0.75pt solid #000 !important;
+  }
+
+  .preview-table tbody td {
+    padding: 2mm 2mm !important;
+    border: 0.75pt solid #333 !important;
+    text-align: center !important;
+    font-size: 8.5pt !important;
+    color: #000 !important;
   }
 
   .preview-table tbody tr:nth-child(even) {
-    background: #f5f5f5 !important;
+    background: #f0f0f0 !important;
   }
 
+  /* ---- Signature ---- */
+  .preview-signature {
+    display: flex !important;
+    justify-content: flex-end !important;
+    padding-top: 4mm !important;
+    margin-top: 2mm !important;
+  }
+
+  .preview-signature-block {
+    text-align: center !important;
+    min-width: 55mm !important;
+  }
+
+  .preview-signature-line {
+    border-bottom: 1.5pt solid #000 !important;
+    margin-bottom: 2mm !important;
+    height: 12mm !important;
+  }
+
+  .preview-signature-text {
+    font-size: 8.5pt !important;
+    font-weight: 700 !important;
+    color: #000 !important;
+    line-height: 1.6 !important;
+  }
+
+  /* ---- Footer ---- */
   .preview-footer {
-    background: #f5f5f5 !important;
-    border-top: 2px solid #000 !important;
-  }
-
-  .preview-emblem {
-    width: 48px !important;
-    height: 48px !important;
-  }
-
-  .preview-description {
-    font-size: 0.82rem !important;
-    line-height: 1.7 !important;
-  }
-
-  .preview-table {
-    font-size: 0.8rem !important;
+    background: #f0f0f0 !important;
+    border-top: 1.5pt solid #000 !important;
+    padding: 2mm 8mm !important;
+    text-align: center !important;
+    font-size: 7.5pt !important;
+    color: #444 !important;
   }
 }
