@@ -80,7 +80,7 @@ export function formatFormData(selectedStation, officers) {
     district: 'अयोध्या',
     officers: officers.map((officer, index) => ({
       serialNumber: index + 1,
-      thana: officer.thana,
+      thana: officer.thana || selectedStation,
       pno: officer.pno,
       designation: officer.designation,
       name: officer.name,

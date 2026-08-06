@@ -83,7 +83,7 @@ export default function PreviewPage({ selectedStation, officers, onBack }) {
         <div className="preview-body">
           {/* Title */}
           <div className="preview-title">
-            सूची अधिकारी/कर्मचारी ई-साक्ष्य मॉनीटरिंग थाना - {selectedStation || '_______________'}
+            अधिकारी/कर्मचारी ई-साक्ष्य मॉनीटरिंग थाना - {selectedStation || '_______________'}
           </div>
 
           {/* Description */}
@@ -102,7 +102,7 @@ export default function PreviewPage({ selectedStation, officers, onBack }) {
               {displayOfficers.map((officer, index) => (
                 <tr key={officer.id || index}>
                   <td style={{ fontWeight: 700 }}>{index + 1}</td>
-                  <td>{officer.thana || '-'}</td>
+                  <td>{officer.thana || selectedStation || '-'}</td>
                   <td>{officer.pno || '-'}</td>
                   <td>{officer.designation || '-'}</td>
                   <td>{officer.name || '-'}</td>
