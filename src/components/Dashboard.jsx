@@ -15,6 +15,13 @@ export default function Dashboard({ onBack }) {
         if (response.success) {
           setData(response.data || []);
           setIsDemo(!!response.demo);
+        } else if (response.status === 'active') {
+          // Detected old script version
+          setErrorMsg('Google Apps Script का पुराना संस्करण सक्रिय है। कृपया Apps Script संपादक में जाकर "New Deployment" या "Manage Deployments" से "New Version" चुनकर पुनः डिप्लॉय करें ताकि डेटा डैशबोर्ड में प्रदर्शित हो सके। (वर्तमान में डेमो डेटा दिखाया जा रहा है)');
+          setIsDemo(true);
+          // Load helper mock data so dashboard is still viewable
+          const mockDataRes = await fetchGoogleSheetData(); // service falls back to mock if url doesn't match
+          setData(mockDataRes.data || []);
         } else {
           setErrorMsg(response.message || 'डेटा लोड करने में विफल।');
           setData(response.data || []); // Fallback mock data
