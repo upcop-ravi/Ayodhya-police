@@ -62,35 +62,57 @@ export async function saveToGoogleSheet(formData) {
   }
 }
 
-/**
- * Fetch all data from Google Spreadsheet for statistics dashboard
- * @returns {Promise<Object>} - Contains success, data array, and optional message
- */
 export async function fetchGoogleSheetData() {
-  if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL') {
-    // Return mock data for demo mode
-    await new Promise(resolve => setTimeout(resolve, 800));
-    return {
-      success: true,
-      demo: true,
-      data: getMockDashboardData()
-    };
-  }
+  const SPREADSHEET_ID = '1Iw-lkFgCHBZZRnJsAL7FuwbaZrWpb13-ZeE186H11RU';
+  const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json`;
 
   try {
-    const response = await fetch(GOOGLE_SCRIPT_URL);
+    const response = await fetch(url);
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
-    const result = await response.json();
-    return result;
+    const text = await response.text();
+    
+    // Parse the JSONP-like format /*O_o*/\ngoogle.visualization.Query.setResponse({...});
+    const startIdx = text.indexOf('{');
+    const endIdx = text.lastIndexOf('}');
+    if (startIdx === -1 || endIdx === -1) {
+      throw new Error('Invalid JSON format from Google Sheets');
+    }
+    
+    const jsonStr = text.substring(startIdx, endIdx + 1);
+    const result = JSON.parse(jsonStr);
+    
+    if (result.status !== 'ok') {
+      throw new Error('Google query status not ok');
+    }
+
+    const rows = result.table.rows || [];
+    const formattedData = rows.map(row => {
+      const cells = row.c || [];
+      return {
+        timestamp: cells[0] ? (cells[0].f || cells[0].v || '') : '',
+        station: cells[1] ? (cells[1].v || '') : '',
+        district: cells[2] ? (cells[2].v || '') : '',
+        serialNumber: cells[3] ? (cells[3].v || '') : '',
+        thana: cells[4] ? (cells[4].v || '') : '',
+        pno: cells[5] ? (cells[5].f || cells[5].v || '') : '', // string representation
+        designation: cells[6] ? (cells[6].v || '') : '',
+        name: cells[7] ? (cells[7].v || '') : '',
+        mobile: cells[8] ? (cells[8].f || cells[8].v || '') : '' // string representation
+      };
+    });
+
+    return {
+      success: true,
+      data: formattedData
+    };
   } catch (error) {
     console.error('Error fetching Google Sheets data:', error);
-    // Return empty array and error status
     return {
       success: false,
-      message: 'डेटा लोड करने में असमर्थ। डेमो डेटा प्रदर्शित किया जा रहा है।',
-      data: getMockDashboardData() // fallback to mock data on error so dashboard is still viewable
+      message: 'डेटा लोड करने में असमर्थ। (नेटवर्क समस्या या अमान्य अनुमतियां)',
+      data: getMockDashboardData() // fallback to mock data
     };
   }
 }
