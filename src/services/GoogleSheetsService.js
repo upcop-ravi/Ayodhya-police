@@ -14,7 +14,7 @@
  */
 
 // Deployed Google Apps Script Web App URL for e-Sakshya Nominated officers List Dist Ayodhya sheet
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzI-jHxZULBHqa8r781UvVvChoBuAuajfZpE1nfWvfY2MisUtkJ56L7SDad-Z9FNLdqRQ/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzZZGn6EEHY5xsKDunaMXRPGGiHX7W7VdOjvJEkRY01YZAIedLUCea6MiCFuDHbwpgAQ/exec';
 
 /**
  * Save form data to Google Spreadsheet
