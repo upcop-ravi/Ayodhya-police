@@ -63,6 +63,72 @@ export async function saveToGoogleSheet(formData) {
 }
 
 /**
+ * Fetch all data from Google Spreadsheet for statistics dashboard
+ * @returns {Promise<Object>} - Contains success, data array, and optional message
+ */
+export async function fetchGoogleSheetData() {
+  if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL') {
+    // Return mock data for demo mode
+    await new Promise(resolve => setTimeout(resolve, 800));
+    return {
+      success: true,
+      demo: true,
+      data: getMockDashboardData()
+    };
+  }
+
+  try {
+    const response = await fetch(GOOGLE_SCRIPT_URL);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error('Error fetching Google Sheets data:', error);
+    // Return empty array and error status
+    return {
+      success: false,
+      message: 'डेटा लोड करने में असमर्थ। डेमो डेटा प्रदर्शित किया जा रहा है।',
+      data: getMockDashboardData() // fallback to mock data on error so dashboard is still viewable
+    };
+  }
+}
+
+/**
+ * Helper to generate mock data for demo / fallback mode
+ */
+function getMockDashboardData() {
+  const stations = [
+    'अयोध्या कैंट', 'इनायत नगर', 'कुमारगंज', 'कोतवाली अयोध्या', 'कोतवाली नगर', 
+    'कोतवाली बीकापुर', 'खंडासा'
+  ];
+  const designations = ['उ0नि0', 'मु0आ0', 'आरक्षी', 'क0आ0'];
+  const mockRows = [];
+  
+  // Let's populate some nominations
+  // Station 1: 3 nominations
+  stations.slice(0, 4).forEach((station, sIdx) => {
+    // Nominate 1, 2, or 3 officers
+    const count = (sIdx % 3) + 1; // 1, 2, or 3
+    for (let i = 0; i < count; i++) {
+      mockRows.push({
+        timestamp: new Date(Date.now() - (sIdx * 24 * 60 * 60 * 1000)).toLocaleString('hi-IN'),
+        station: station,
+        district: 'अयोध्या',
+        thana: station,
+        pno: '987654' + sIdx + i,
+        designation: designations[(sIdx + i) % designations.length],
+        name: 'अधिकारी ' + (sIdx * 3 + i + 1),
+        mobile: '99887766' + sIdx + i
+      });
+    }
+  });
+  
+  return mockRows;
+}
+
+/**
  * Format form data for spreadsheet storage
  * @param {string} selectedStation - Selected police station
  * @param {Array} officers - Array of officer data objects

@@ -1137,3 +1137,444 @@ body {
     color: #444 !important;
   }
 }
+
+/* ===== Dashboard navigation button ===== */
+.btn-dashboard-nav {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 0.65rem 1.2rem;
+  border-radius: 8px;
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.btn-dashboard-nav:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+/* ===== Dashboard Layout ===== */
+.dashboard-loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  color: var(--navy-900);
+}
+
+.dashboard-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  min-height: 100vh;
+  animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dashboard-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.dashboard-nav-title {
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Banners */
+.demo-banner, .error-banner {
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-size: 0.88rem;
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.demo-banner {
+  background-color: #ebf5fb;
+  border-left: 4px solid #3498db;
+  color: #2c3e50;
+}
+
+.error-banner {
+  background-color: #fdf2f2;
+  border-left: 4px solid #e74c3c;
+  color: #c0392b;
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.col-span-2 {
+  grid-column: span 2;
+}
+
+/* Cards */
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+/* Metric Cards */
+.metric-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 110px;
+  background: linear-gradient(135deg, #ffffff 0%, #f9fbfd 100%);
+}
+
+.metric-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+  font-family: 'Noto Sans Devanagari', sans-serif;
+}
+
+.metric-val {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--navy-900);
+}
+
+/* Chart Cards */
+.chart-card {
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-title {
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--navy-900);
+  border-bottom: 2px solid #f1f3f8;
+  padding-bottom: 0.6rem;
+  margin-bottom: 1.2rem;
+}
+
+/* 1. Bar Chart Styles */
+.bar-chart-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  overflow-y: auto;
+  max-height: 360px;
+  padding-right: 0.5rem;
+}
+
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.bar-label {
+  width: 140px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #444;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: 'Noto Sans Devanagari', sans-serif;
+}
+
+.bar-wrapper {
+  flex-grow: 1;
+  background: #f1f3f5;
+  height: 20px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 800;
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.active-bar {
+  background: linear-gradient(90deg, var(--navy-800), #3498db);
+  box-shadow: 0 2px 6px rgba(52, 152, 219, 0.2);
+}
+
+.empty-bar {
+  background: #e9ecef;
+  width: 3% !important;
+}
+
+.bar-value {
+  font-size: 0.75rem;
+}
+
+/* 2. Pie Chart Styles */
+.pie-chart-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-grow: 1;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.svg-pie-wrapper {
+  position: relative;
+  width: 160px;
+  height: 160px;
+}
+
+.pie-svg {
+  transform: rotate(-90deg);
+  border-radius: 50%;
+}
+
+.pie-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.legend-text {
+  font-size: 0.82rem;
+  color: #444;
+  font-family: 'Noto Sans Devanagari', sans-serif;
+}
+
+/* 3. Line Chart Styles */
+.line-chart-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.line-svg {
+  width: 100%;
+  max-height: 220px;
+}
+
+.no-data-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  color: #999;
+  font-size: 0.88rem;
+  font-family: 'Noto Sans Devanagari', sans-serif;
+}
+
+/* 4. Distribution Count Cards */
+.dist-cards-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.distribution-subtitle {
+  font-size: 0.82rem;
+  color: #666;
+  margin-top: -0.8rem;
+  margin-bottom: 1rem;
+  font-family: 'Noto Sans Devanagari', sans-serif;
+}
+
+.dist-count-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.dist-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748b;
+  margin-bottom: 0.4rem;
+  font-family: 'Noto Sans Devanagari', sans-serif;
+}
+
+.dist-value {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--navy-900);
+}
+
+.dist-unit {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #64748b;
+}
+
+/* 5 & 6. List Cards */
+.list-card {
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+}
+
+.list-title {
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  border-bottom: 2px solid;
+  padding-bottom: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.station-ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+  flex-grow: 1;
+  max-height: 300px;
+  padding-right: 0.2rem;
+}
+
+.station-li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid #f1f3f5;
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  font-size: 0.85rem;
+  border-radius: 4px;
+}
+
+.station-li:hover {
+  background-color: #f8fafc;
+}
+
+.station-li-name {
+  font-weight: 600;
+  color: #333;
+}
+
+.station-li-badge {
+  background: #eafaf1;
+  color: #27ae60;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+}
+
+.pending-li {
+  background-color: #fffafb;
+  border-bottom-color: #ffeef0;
+}
+
+.pending-li:hover {
+  background-color: #fff5f6;
+}
+
+.pending-badge {
+  background: #fdf2f2;
+  color: #e74c3c;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+}
+
+.empty-list-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  color: #888;
+  font-size: 0.85rem;
+  font-style: italic;
+  text-align: center;
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  padding: 1.5rem;
+}
+
+/* Responsive Dashboard */
+@media (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+  .col-span-2 {
+    grid-column: span 1;
+  }
+  .dist-cards-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard-wrapper {
+    padding: 0.8rem;
+  }
+  .card {
+    padding: 1rem;
+  }
+  .dist-cards-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .btn-dashboard-nav {
+    width: 100%;
+    justify-content: center;
+  }
+}

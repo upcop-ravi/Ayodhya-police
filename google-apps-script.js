@@ -111,14 +111,61 @@ function doPost(e) {
 }
 
 /**
- * Handle GET requests (for testing)
+ * Handle GET requests to fetch data for the statistics dashboard
  */
 function doGet(e) {
-  return ContentService.createTextOutput(
-    JSON.stringify({ 
-      status: 'active', 
-      message: 'ई-साक्ष्य मॉनीटरिंग API is running',
-      version: '1.0'
-    })
-  ).setMimeType(ContentService.MimeType.JSON);
+  try {
+    const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    const sheet = ss.getSheetByName(SHEET_NAME);
+    
+    if (!sheet) {
+      return ContentService.createTextOutput(
+        JSON.stringify({ success: false, message: 'Sheet "' + SHEET_NAME + '" not found' })
+      ).setMimeType(ContentService.MimeType.JSON);
+    }
+
+    const lastRow = sheet.getLastRow();
+    const lastColumn = sheet.getLastColumn();
+    
+    // If sheet is empty or only has headers
+    if (lastRow <= 1) {
+      return ContentService.createTextOutput(
+        JSON.stringify({ success: true, data: [] })
+      ).setMimeType(ContentService.MimeType.JSON);
+    }
+
+    const headers = sheet.getRange(1, 1, 1, lastColumn).getValues()[0];
+    const dataRange = sheet.getRange(2, 1, lastRow - 1, lastColumn).getValues();
+    
+    const rows = dataRange.map(function(row) {
+      const obj = {};
+      headers.forEach(function(header, index) {
+        // Clean key names (extract English names or keep standard keys)
+        let key = header;
+        if (header.includes('Station')) key = 'station';
+        else if (header.includes('District')) key = 'district';
+        else if (header.includes('Timestamp')) key = 'timestamp';
+        else if (header.includes('Officer Thana')) key = 'thana';
+        else if (header.includes('PNO')) key = 'pno';
+        else if (header.includes('Designation')) key = 'designation';
+        else if (header.includes('Name')) key = 'name';
+        else if (header.includes('Mobile')) key = 'mobile';
+        
+        obj[key] = row[index];
+      });
+      return obj;
+    });
+
+    return ContentService.createTextOutput(
+      JSON.stringify({ 
+        success: true, 
+        data: rows
+      })
+    ).setMimeType(ContentService.MimeType.JSON);
+
+  } catch (error) {
+    return ContentService.createTextOutput(
+      JSON.stringify({ success: false, message: error.toString() })
+    ).setMimeType(ContentService.MimeType.JSON);
+  }
 }

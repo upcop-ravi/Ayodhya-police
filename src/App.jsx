@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import NominationForm from './components/NominationForm.jsx';
 import PreviewPage from './components/PreviewPage.jsx';
+import Dashboard from './components/Dashboard.jsx';
 import Toast from './components/Toast.jsx';
 import { saveToGoogleSheet, formatFormData } from './services/GoogleSheetsService.js';
 
@@ -16,7 +17,7 @@ function createEmptyOfficer() {
 }
 
 export default function App() {
-  const [currentView, setCurrentView] = useState('form'); // 'form' or 'preview'
+  const [currentView, setCurrentView] = useState('form'); // 'form', 'preview', or 'dashboard'
   const [selectedStation, setSelectedStation] = useState('');
   const [officers, setOfficers] = useState([
     createEmptyOfficer(),
@@ -115,7 +116,7 @@ export default function App() {
         />
       )}
 
-      {/* Route between Form and Preview */}
+      {/* Route between Form, Preview and Dashboard */}
       {currentView === 'form' ? (
         <NominationForm
           selectedStation={selectedStation}
@@ -123,13 +124,16 @@ export default function App() {
           officers={officers}
           setOfficers={setOfficers}
           onSaveAndPreview={handleSaveAndPreview}
+          onNavigateToDashboard={() => setCurrentView('dashboard')}
         />
-      ) : (
+      ) : currentView === 'preview' ? (
         <PreviewPage
           selectedStation={selectedStation}
           officers={officers}
           onBack={handleBackToForm}
         />
+      ) : (
+        <Dashboard onBack={handleBackToForm} />
       )}
     </>
   );

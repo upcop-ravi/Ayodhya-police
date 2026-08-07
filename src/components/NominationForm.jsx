@@ -25,7 +25,7 @@ function createEmptyOfficer() {
   };
 }
 
-export default function NominationForm({ selectedStation, setSelectedStation, officers, setOfficers, onSaveAndPreview }) {
+export default function NominationForm({ selectedStation, setSelectedStation, officers, setOfficers, onSaveAndPreview, onNavigateToDashboard }) {
   const [isSaving, setIsSaving] = useState(false);
 
   const handleStationChange = useCallback((e) => {
@@ -76,28 +76,43 @@ export default function NominationForm({ selectedStation, setSelectedStation, of
             ई-साक्ष्य मॉनीटरिंग प्रपत्र
             <span className="badge">अयोध्या</span>
           </div>
-          <button
-            className="btn-save-preview"
-            onClick={handleSaveAndPreview}
-            disabled={isSaving}
-            id="btn-save-preview"
-          >
-            {isSaving ? (
-              <>
-                <span className="spinner"></span>
-                सेव हो रहा है...
-              </>
-            ) : (
-              <>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
-                  <polyline points="17 21 17 13 7 13 7 21"/>
-                  <polyline points="7 3 7 8 15 8"/>
-                </svg>
-                Save and Preview
-              </>
-            )}
-          </button>
+          <div className="action-buttons-group" style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
+            <button
+              className="btn-dashboard-nav"
+              onClick={onNavigateToDashboard}
+              id="btn-dashboard-nav"
+              type="button"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '4px' }}>
+                <line x1="18" y1="20" x2="18" y2="10"/>
+                <line x1="12" y1="20" x2="12" y2="4"/>
+                <line x1="6" y1="20" x2="6" y2="14"/>
+              </svg>
+              डैशबोर्ड देखें
+            </button>
+            <button
+              className="btn-save-preview"
+              onClick={handleSaveAndPreview}
+              disabled={isSaving}
+              id="btn-save-preview"
+            >
+              {isSaving ? (
+                <>
+                  <span className="spinner"></span>
+                  सेव हो रहा है...
+                </>
+              ) : (
+                <>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                    <polyline points="17 21 17 13 7 13 7 21"/>
+                    <polyline points="7 3 7 8 15 8"/>
+                  </svg>
+                  Save and Preview
+                </>
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Header with Emblem */}
