@@ -134,24 +134,24 @@ function doGet(e) {
       ).setMimeType(ContentService.MimeType.JSON);
     }
 
-    const headers = sheet.getRange(1, 1, 1, lastColumn).getValues()[0];
-    const dataRange = sheet.getRange(2, 1, lastRow - 1, lastColumn).getValues();
+    const dataRange = sheet.getRange(2, 1, lastRow - 1, 9).getValues(); // always read first 9 columns
     
+    const keys = [
+      'timestamp',    // Col 1
+      'station',      // Col 2
+      'district',     // Col 3
+      'serialNumber', // Col 4
+      'thana',        // Col 5
+      'pno',          // Col 6
+      'designation',  // Col 7
+      'name',         // Col 8
+      'mobile'        // Col 9
+    ];
+
     const rows = dataRange.map(function(row) {
       const obj = {};
-      headers.forEach(function(header, index) {
-        // Clean key names (extract English names or keep standard keys)
-        let key = header;
-        if (header.includes('Station')) key = 'station';
-        else if (header.includes('District')) key = 'district';
-        else if (header.includes('Timestamp')) key = 'timestamp';
-        else if (header.includes('Officer Thana')) key = 'thana';
-        else if (header.includes('PNO')) key = 'pno';
-        else if (header.includes('Designation')) key = 'designation';
-        else if (header.includes('Name')) key = 'name';
-        else if (header.includes('Mobile')) key = 'mobile';
-        
-        obj[key] = row[index];
+      keys.forEach(function(key, index) {
+        obj[key] = row[index] !== undefined ? row[index] : '';
       });
       return obj;
     });

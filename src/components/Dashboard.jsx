@@ -40,10 +40,11 @@ export default function Dashboard({ onBack }) {
     });
 
     data.forEach(row => {
-      const st = row.station || row.thana;
+      const st = (row.station || row.thana || '').toString().trim();
       if (st && totalStationsList.includes(st)) {
-        if (row.pno) {
-          stationNominations[st].add(row.pno);
+        const pno = (row.pno || '').toString().trim();
+        if (pno) {
+          stationNominations[st].add(pno);
         }
       }
     });
