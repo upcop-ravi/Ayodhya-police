@@ -7,6 +7,7 @@ export default function Dashboard({ onBack }) {
   const [data, setData] = useState([]);
   const [errorMsg, setErrorMsg] = useState('');
   const [isDemo, setIsDemo] = useState(false);
+  const [selectedStationDetails, setSelectedStationDetails] = useState(null);
 
   useEffect(() => {
     async function loadData() {
@@ -35,6 +36,21 @@ export default function Dashboard({ onBack }) {
     }
     loadData();
   }, []);
+
+  const handleBarClick = (stationName, count) => {
+    if (count === 0) return;
+    
+    // Find all officers under this station
+    const officersForStation = data.filter(row => {
+      const st = (row.station || row.thana || '').toString().trim();
+      return st === stationName.trim();
+    });
+
+    setSelectedStationDetails({
+      name: stationName,
+      officers: officersForStation
+    });
+  };
 
   // Compute stats
   const stats = useMemo(() => {
@@ -197,7 +213,12 @@ export default function Dashboard({ onBack }) {
               const count = stats.nominationsCountMap[st];
               const pct = (count / maxNominations) * 100;
               return (
-                <div key={st} className="bar-row">
+                <div 
+                  key={st} 
+                  className={`bar-row ${count > 0 ? 'clickable-bar' : ''}`}
+                  onClick={() => handleBarClick(st, count)}
+                  style={count > 0 ? { cursor: 'pointer' } : {}}
+                >
                   <div className="bar-label">{st}</div>
                   <div className="bar-wrapper">
                     <div 
@@ -388,6 +409,54 @@ export default function Dashboard({ onBack }) {
         </div>
 
       </div>
+
+      {/* Drawer Overlay and Bottom Sheet */}
+      {selectedStationDetails && (
+        <>
+          <div 
+            className="drawer-overlay active" 
+            onClick={() => setSelectedStationDetails(null)}
+          ></div>
+          <div className="bottom-drawer active">
+            <div className="drawer-header">
+              <div className="drawer-title">
+                🏢 {selectedStationDetails.name} - नामांकित अधिकारी विवरण
+              </div>
+              <button 
+                className="btn-close-drawer" 
+                onClick={() => setSelectedStationDetails(null)}
+              >
+                &times;
+              </button>
+            </div>
+            <div className="drawer-body">
+              {selectedStationDetails.officers.length === 0 ? (
+                <div className="empty-list-placeholder">कोई नामांकित अधिकारी उपलब्ध नहीं हैं।</div>
+              ) : (
+                <div className="drawer-officers-list">
+                  {selectedStationDetails.officers.map((off, oIdx) => (
+                    <div key={oIdx} className="drawer-officer-card">
+                      <div className="officer-card-header">
+                        <span className="officer-badge-rank">{off.designation || 'पदनाम अनुपलब्ध'}</span>
+                        <span className="officer-pno">PNO: {off.pno}</span>
+                      </div>
+                      <div className="officer-name-title">{off.name}</div>
+                      <div className="officer-contact-row">
+                        <a href={`tel:${off.mobile}`} className="officer-phone-link">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '6px' }}>
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                          </svg>
+                          {off.mobile}
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
