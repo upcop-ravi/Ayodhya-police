@@ -438,6 +438,11 @@ export default function Dashboard({ onBack }) {
                     <div key={oIdx} className="drawer-officer-card">
                       <div className="officer-card-header">
                         <span className="officer-badge-rank">{off.designation || 'पदनाम अनुपलब्ध'}</span>
+                        {off.pno && (
+                          <span className="officer-pno">
+                            PNO: {off.pno.toString().trim().substring(0, 4) + 'X'.repeat(Math.max(0, off.pno.toString().trim().length - 4))}
+                          </span>
+                        )}
                       </div>
                       <div className="officer-name-title">{off.name}</div>
                       <div className="officer-contact-row">
