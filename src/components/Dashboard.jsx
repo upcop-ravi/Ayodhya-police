@@ -288,71 +288,8 @@ export default function Dashboard({ onBack }) {
           </div>
         </div>
 
-        {/* 3. Line Chart: Submissions Over Time */}
-        <div className="card chart-card">
-          <h3 className="chart-title">📈 हालिया पंजीकरण रुझान (Submission Line Chart)</h3>
-          {stats.timeline.length === 0 ? (
-            <div className="no-data-placeholder">तिथि अनुसार आंकड़े उपलब्ध नहीं हैं।</div>
-          ) : (
-            <div className="line-chart-container">
-              {/* Custom SVG Line Chart */}
-              <svg viewBox="0 0 300 150" className="line-svg">
-                {(() => {
-                  const points = stats.timeline;
-                  const maxVal = Math.max(...points.map(p => p.count), 1);
-                  const width = 300;
-                  const height = 110;
-                  const padding = 25;
-                  
-                  const stepX = (width - padding * 2) / Math.max(points.length - 1, 1);
-                  
-                  const coords = points.map((p, idx) => {
-                    const x = padding + idx * stepX;
-                    const y = height - padding - (p.count / maxVal) * (height - padding * 2);
-                    return { x, y, label: p.date, val: p.count };
-                  });
-
-                  const pathD = coords.reduce((acc, c, idx) => {
-                    return acc + (idx === 0 ? `M ${c.x} ${c.y}` : ` L ${c.x} ${c.y}`);
-                  }, '');
-
-                  const areaD = coords.length > 0 
-                    ? `${pathD} L ${coords[coords.length - 1].x} ${height - padding} L ${coords[0].x} ${height - padding} Z` 
-                    : '';
-
-                  return (
-                    <>
-                      <defs>
-                        <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="#1a2980" stopOpacity="0.4" />
-                          <stop offset="100%" stopColor="#1a2980" stopOpacity="0.0" />
-                        </linearGradient>
-                      </defs>
-                      
-                      <line x1={padding} y1={height - padding} x2={width - padding} y2={height - padding} stroke="#ddd" strokeWidth="1" />
-                      <line x1={padding} y1={padding} x2={width - padding} y2={padding} stroke="#f5f5f5" strokeWidth="1" />
-
-                      {areaD && <path d={areaD} fill="url(#chartGradient)" />}
-
-                      {pathD && <path d={pathD} fill="none" stroke="#1a2980" strokeWidth="2.5" />}
-
-                      {coords.map((c, idx) => (
-                        <g key={idx}>
-                          <circle cx={c.x} cy={c.y} r="4" fill="#f39c12" stroke="#1a2980" strokeWidth="1.5" />
-                          <text x={c.x} y={c.y - 8} textAnchor="middle" fontSize="8" fontWeight="bold" fill="#333">{c.val}</text>
-                          <text x={c.x} y={height - padding + 12} textAnchor="middle" fontSize="7" fill="#666" transform={`rotate(-15, ${c.x}, ${height - padding + 12})`}>{c.label}</text>
-                        </g>
-                      ))}
-                    </>
-                  );
-                })()}
-              </svg>
-            </div>
-          )}
-        </div>
-
         {/* 4. Distribution Count Cards */}
-        <div className="card chart-card col-span-2">
+        <div className="card chart-card col-span-3">
           <h3 className="chart-title">📊 नामांकन लक्ष्य वितरण (Nomination Target Distribution)</h3>
           <p className="distribution-subtitle">कितने थानों ने कितने पुलिसकर्मियों को नामांकित किया है:</p>
           <div className="dist-cards-container">
@@ -371,7 +308,7 @@ export default function Dashboard({ onBack }) {
         </div>
 
         {/* 5. Submitted list of Police Stations */}
-        <div className="card list-card">
+        <div className="card list-card col-span-2">
           <h3 className="list-title" style={{ color: '#27ae60', borderBottomColor: '#2ebd67' }}>
             ✅ विवरण भेजने वाले थाने ({stats.submittedStations.length})
           </h3>
