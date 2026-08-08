@@ -438,7 +438,6 @@ export default function Dashboard({ onBack }) {
                     <div key={oIdx} className="drawer-officer-card">
                       <div className="officer-card-header">
                         <span className="officer-badge-rank">{off.designation || 'पदनाम अनुपलब्ध'}</span>
-                        <span className="officer-pno">PNO: {off.pno}</span>
                       </div>
                       <div className="officer-name-title">{off.name}</div>
                       <div className="officer-contact-row">
